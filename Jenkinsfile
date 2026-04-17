@@ -76,11 +76,13 @@ pipeline {
                 // This is where you'd run a shell script or ssh command
                 //sh './deploy.sh'
                 echo "deploy the version is: ${VERSION}"
-            }
 
-            script {
+                script {
                     gv.deployApp()
                 }
+            }
+
+
         }
     }
 
