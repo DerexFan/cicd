@@ -25,12 +25,21 @@ pipeline {
             }
         }
 
+        stage('init') {
+            steps {
+                gv = load "script.groovy"
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Compiling the application...'
                 echo "current app: $APP_NAME, and current version: $CURRENT_VERSION"
                 // Example for a Node project; use ./mvnw for Java, etc.
                 //sh 'npm install'
+                script {
+                    gv.buildApp()
+                }
             }
         }
 
@@ -43,6 +52,9 @@ pipeline {
             steps {
                 echo 'Running unit tests...'
                 //sh 'npm test'
+                script {
+                    gv.testApp()
+                }
             }
         }
 
@@ -63,6 +75,10 @@ pipeline {
                 //sh './deploy.sh'
                 echo "deploy the version is: ${VERSION}"
             }
+
+            script {
+                    gv.deployApp()
+                }
         }
     }
 
