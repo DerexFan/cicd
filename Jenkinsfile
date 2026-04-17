@@ -61,6 +61,13 @@ pipeline {
         }
 
         stage('Deploy') {
+             input {
+                    message "Select the environment to deploy to"
+                    ok "Done"
+                    parameters {
+                        choice(name: 'ENV', choices: ['dev', 'staging', 'prod'], description: '')
+                    }
+                }
             steps {
                 echo 'Deploying to Staging server...'
                withCredentials([
@@ -77,13 +84,7 @@ pipeline {
                 //sh './deploy.sh'
                 echo "deploy the version is: ${VERSION}"
 
-                input {
-                    message "Select the environment to deploy to"
-                    ok "Done"
-                    parameters {
-                        choice(name: 'ENV', choices: ['dev', 'staging', 'prod'], description: '')
-                    }
-                }
+               
 
                 script {
                     gv.deployApp()
