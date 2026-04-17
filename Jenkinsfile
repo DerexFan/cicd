@@ -4,6 +4,7 @@ pipeline {
     environment {
         APP_NAME = "my-cool-app"
         CURRENT_VERSION = "1.0"
+        SERVER_CREDENTIALS = credentials('bd98efb1-c6b8-4b66-969e-6220ebb1a85c')
     }
 
     stages {
@@ -33,6 +34,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying to Staging server...'
+                withCredentials([
+                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
+                    ]) {
+                        sh "some script username:${USER} and the password: ${PWD}"
+                }
                 // This is where you'd run a shell script or ssh command
                 //sh './deploy.sh'
             }
