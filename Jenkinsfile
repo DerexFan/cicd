@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         APP_NAME = "my-cool-app"
+        CURRENT_VERSION = "1.0"
     }
 
     stages {
@@ -16,6 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Compiling the application...'
+                echo "current app: $APP_NAME, and current version: $CURRENT_VERSION"
                 // Example for a Node project; use ./mvnw for Java, etc.
                 //sh 'npm install'
             }
