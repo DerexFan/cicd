@@ -37,7 +37,7 @@ pipeline {
                 withCredentials([
                     usernamePassword(credentials: 'SERVER_CREDENTIALS', usernameVariable: USER, passwordVariable: PWD)
                     ]) {
-                        sh "some script username:${USER} and the password: ${PWD}"
+                        sh "some script username:${env.USER} and the password: ${PWD}"
                 }
                 // This is where you'd run a shell script or ssh command
                 //sh './deploy.sh'
