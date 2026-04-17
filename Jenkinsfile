@@ -42,7 +42,7 @@ pipeline {
             )
         ]) {
             // Note: Use single quotes for 'sh' to prevent Groovy from leaking secrets into logs
-            sh "some script username:${USER} and the password: ${PWD}"
+            // sh "some script username:${USER} and the password: ${PWD}"
         }
                 // This is where you'd run a shell script or ssh command
                 //sh './deploy.sh'
