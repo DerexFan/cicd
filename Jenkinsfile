@@ -1,12 +1,22 @@
 pipeline {
     agent any // Runs on any available executor
 
+    tools {
+        maven 'Maven'
+    }
+
+    parameters {
+        string(name: 'VERSION', defaultValue: '', description: 'version to deploy on prod')
+        choice(name: 'VERSION', choices;['1.0', '1.1', '1.2'], descript: '')
+        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+    }
+
     environment {
         APP_NAME = "my-cool-app"
         CURRENT_VERSION = "1.0"
         SERVER_CREDENTIALS = credentials('bd98efb1-c6b8-4b66-969e-6220ebb1a85c')
     }
-
+ 
     stages {
         stage('Checkout') {
             steps {
@@ -25,6 +35,11 @@ pipeline {
         }
 
         stage('Test') {
+            when {
+                expression {
+                    params.executeTests
+                }
+            }
             steps {
                 echo 'Running unit tests...'
                 //sh 'npm test'
@@ -46,6 +61,7 @@ pipeline {
         }
                 // This is where you'd run a shell script or ssh command
                 //sh './deploy.sh'
+                echo "deploy the version is: ${VERSION}"
             }
         }
     }
