@@ -35,7 +35,7 @@ pipeline {
             steps {
                 echo 'Deploying to Staging server...'
                 withCredentials([
-                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
+                    usernamePassword(credentials: 'SERVER_CREDENTIALS', usernameVariable: USER, passwordVariable: PWD)
                     ]) {
                         sh "some script username:${USER} and the password: ${PWD}"
                 }
